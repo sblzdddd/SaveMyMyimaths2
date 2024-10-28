@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      2024-09-23
 // @description  做题原神2.0
-// @author       You
+// @author       UTH_OFFICIAL & sblzdddd
 // @match        https://app.myimaths.com/myportal/student/my_homework
 // @icon         https://raw.githubusercontent.com/Arrokoth486958/cirno-is-baka/refs/heads/master/src/cirno.png
 // @require      https://code.jquery.com/jquery-2.1.4.min.js
