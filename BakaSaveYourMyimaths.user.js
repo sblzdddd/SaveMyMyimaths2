@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BakaSaveYourMyimaths
 // @namespace    http://tampermonkey.net/
-// @version      2024-09-23
+// @version      2024-11-13
 // @description  做题原神2.0
 // @author       UTH_OFFICIAL & sblzdddd
 // @match        https://app.myimaths.com/myportal/student/my_homework
@@ -18,13 +18,13 @@
     const GM__xmlHttpRequest = ("undefined" != typeof (GM_xmlhttpRequest))?GM_xmlhttpRequest:GM.xmlHttpRequest;
 
     const styles = $(`<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"><style>.baka {position:absolute;right:10px;bottom:10px;width:200px;filter: drop-shadow(2px 4px 6px #00000050);cursor:pointer;} .baka:active {scale: 0.9;}</style>`)
-    
+
     const baka = $(`<img src='https://raw.githubusercontent.com/Arrokoth486958/cirno-is-baka/refs/heads/master/src/cirno_original.png' alt='Baka' class='baka'>`);
 
     let toggle = false, originalTexts = [];
 
     $("head").append(styles);$("body").append(baka)
-    
+
     // toggle hack mode
     baka.on('click', () => {
         const links = $(".primary.btn.btn-m");
@@ -65,7 +65,6 @@
                         const parser = new DOMParser();       // 解析xml
                         const xmlDoc = parser.parseFromString(e.responseText.replace(/&[^;]*;/g, ''), "application/xml");
                         const questionNodes = xmlDoc.getElementsByTagName("homeworkQuestion");
-                        console.log(xmlDoc.getElementsByTagName("worksheet")[0].children)
                         let Q1Score = 0, Q2Score = 0, Q3Score = 0, Q4Score = 0;
                         try {
                             Q1Score = parseInt(questionNodes[0].getAttribute('questionmarks'));
@@ -93,7 +92,7 @@
 
                         Toastify({text: "Authenticating...",close: true}).showToast();
                         GM__xmlHttpRequest({        // Fetch authToken
-                            method: 'POST', url: `https://app.myimaths.com/api/legacy/auth?taskId=${results.taskID}&realID=${results.realID}`, 
+                            method: 'POST', url: `https://app.myimaths.com/api/legacy/auth?taskId=${results.taskID}&realID=${results.realID}`,
                             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                             anonymous: false, headers: {'Referrer': embedSrc},
                             onabort: console.error, onerror: console.error, ontimeout: console.error,
@@ -108,14 +107,14 @@
                                 console.log(formData)
 
                                 GM__xmlHttpRequest({        // save mark
-                                    method: 'POST', url: `https://app.myimaths.com/api/legacy/save/mark?${formData}`, 
+                                    method: 'POST', url: `https://app.myimaths.com/api/legacy/save/mark?${formData}`,
                                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                                     anonymous: false, headers: {'Referrer': embedSrc},
                                     onabort: console.error, onerror: console.error, ontimeout: console.error,
                                     onload: (e) => {
                                         console.log(e.status)
                                         console.log(e.responseText)
-                                        if(e.status === 200) {Toastify({text: "Success!",close: true}).showToast();}
+                                        if(e.status === 200) {Toastify({text: "Success!",close: true}).showToast();location.reload();}
                                         else Toastify({text: `Error ${e.status}!`,close: true}).showToast();
                                     }
                                 })
