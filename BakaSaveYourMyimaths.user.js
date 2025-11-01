@@ -87,6 +87,8 @@
                         if(results.q1score !== "") sCode += results.q1score * 100
                         if(results.q2score !== "") sCode += results.q2score
                         sCode *= 10000;
+                        if(results.q3score !== "") sCode += results.q3score * 100
+                        if(results.q4score !== "") sCode += results.q4score
                         sCode += results.taskID * results.taskID;
                         results.sCode = sCode.toString();
 
